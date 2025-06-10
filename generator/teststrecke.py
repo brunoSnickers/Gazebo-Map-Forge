@@ -33,9 +33,9 @@ cpp_code += "    // --- Wände ---\n"
 for i, seg in enumerate(segments):
     coords = seg["coordinates"]
     cpp_code += f"\n    // Kurve {i+1}\n"
-    cpp_code += "    Mazepolygon poly;\n"
+    cpp_code += f"    Mazepolygon poly{i};\n"
     cpp_code += polygon_to_cpp(coords) + "\n"
-    cpp_code += "    polygons.push_back(poly);\n"
+    cpp_code += f"    polygons.push_back(poly{i});\n"
 
 cpp_code += "\n    // (Optional) Lösungspfad (einfacher Kreis)\n"
 cpp_code += "    SolutionGraphNode node1, node2, node3, node4;\n"

@@ -1,5 +1,6 @@
 import json
 import os
+import math
 
 # --- Hilfsfunktion zum Laden eines Segments ---
 def load_segment(name):
@@ -17,8 +18,30 @@ def polygon_to_cpp(polygon_coords):
         lines.append(f'    poly.coordinates.push_back({coord_to_cpp(coord)});')
     return "\n".join(lines)
 
-# --- Generiere einfache Rundstrecke: vier 90°-Kurven im Quadrat ---
-segments = [load_segment("curve_left") for _ in range(4)]
+# --- Hilfsfunktion zum Transformieren von Koordinaten ---
+def transform_coords(coords, angle_deg, offset):
+    angle_rad = math.radians(angle_deg)
+    cos_a = math.cos(angle_rad)
+    sin_a = math.sin(angle_rad)
+    ox, oy = offset
+    return [
+        [
+            cos_a * x - sin_a * y + ox,
+            sin_a * x + cos_a * y + oy
+        ]
+        for x, y in coords
+    ]
+
+
+# Zentren und Winkel für die vier Kurven im Quadrat
+centers = [(1, 1), (1, -1), (-1, -1), (-1, 1)]
+angles = [0, 90, 180, 270]
+
+segments = []
+for i in range(4):
+    seg = load_segment("curve_left")
+    seg["coordinates"] = transform_coords(seg["coordinates"], angles[i], centers[i])
+    segments.append(seg)
 
 cpp_code = """#include <iostream>
 #include <list>

@@ -1,41 +1,42 @@
 # Gazebo-Map-Forge
 
-Gazebo-Map-Forge helps you create, edit, and convert maps for Gazebo simulations. This repo uses Jupyter Notebook (Python) for map design and C++ for exporting maps to code.
+Dieses Projekt dient zur Erstellung und Konvertierung von Maps für Gazebo-Simulationen.
 
-## Quick Start
+## Workflow
 
-1. **Clone**
-   ```sh
-   git clone https://github.com/brunoSnickers/Gazebo-Map-Forge.git
-   cd Gazebo-Map-Forge
-   ```
-
-2. **Install dependencies**
-   - Requires Python 3 and Jupyter.
-   - Install Python requirements:
-     ```sh
-     pip install ...
+1. **Parameter anpassen**
+   - Öffne die Datei `generator/gazebo_map_forge.py` in VSCode.
+   - Passe am Anfang des Skripts die Parameter an, z.B. Größe, Namen oder andere Einstellungen deiner Map.
+   - Beispiel:
+     ```python
+     width = 10
+     height = 10
+     output_name = "maze"
      ```
 
-3. **Create or edit a map**
-   - Start Jupyter:
+2. **Map generieren**
+   - Führe das Skript aus:
      ```sh
-     jupyter notebook
+     python generator/gazebo_map_forge.py
      ```
-   - Open the notebook(s) for map creation. Follow inline instructions. Save your map file (usually `.yaml` or `.json`).
+   - Die Dateien `maze.txt` und `maze.cpp` werden im Ordner `output/` erstellt bzw. überschrieben.
 
-4. **Generate C++ code**
-   - Use the script to convert your map to C++:
-     ```sh
-     python scripts/generate_cpp.py --input mymap.yaml --output map.cpp
-     ```
-   - You can also edit your map.txt and regenerate as needed.
+3. **Map verwenden**
+   - Nutze die generierte `maze.txt` z.B. für weitere Bearbeitung oder Visualisierung.
+   - Die Datei `maze.cpp` kann direkt in C++-Projekte eingebunden werden.
 
-5. **Use the generated C++**
-   - Include the generated C++ file in your Gazebo project as needed.
+## Wichtige Dateien
 
-## Notes
+- **generator/gazebo_map_forge.py**  
+  Hauptskript zur Erstellung und Anpassung der Map.
 
-- All main workflows are in the Jupyter notebooks and scripts directory.
-- Edit maps in the notebooks or directly in the source file before code generation.
-- No guarantees—use, edit, and adapt as needed.
+- **output/maze.txt**  
+  Textuelle Repräsentation der generierten Map.
+
+- **output/maze.cpp**  
+  Generierte Map als C++-Quelldatei.
+
+## Hinweise
+
+- Änderungen an den Map-Parametern immer im Python-Skript vornehmen.
+- Nach jeder Änderung das Skript erneut ausführen, um die Ausgaben zu aktualisieren.
